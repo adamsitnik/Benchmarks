@@ -41,7 +41,9 @@ namespace Benchmarks
     {
         public BenchmarkConfig()
         {
-            Add(Job.ShortRun.With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp21)));
+            Add(Job.ShortRun.With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp20)).AsBaseline().WithId("2.0"));
+            Add(Job.ShortRun.With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp21)).WithId("2.1"));
+            Add(Job.ShortRun.With(CsProjClassicNetToolchain.Net47).WithId("4.7"));
 
             Add(MemoryDiagnoser.Default);
 
