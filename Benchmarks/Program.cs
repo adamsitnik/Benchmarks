@@ -20,18 +20,22 @@ namespace Benchmarks
                         typeof(Json_ToString<LoginViewModel>),
                         typeof(Json_ToString<Location>),
                         typeof(Json_ToString<IndexViewModel>),
+                        typeof(Json_ToString<MyEventsListerViewModel>),
 
                         typeof(Json_ToStream<LoginViewModel>),
                         typeof(Json_ToStream<Location>),
                         typeof(Json_ToStream<IndexViewModel>),
+                        typeof(Json_ToStream<MyEventsListerViewModel>),
 
                         typeof(Json_FromString<LoginViewModel>),
                         typeof(Json_FromString<Location>),
                         typeof(Json_FromString<IndexViewModel>),
+                        typeof(Json_FromString<MyEventsListerViewModel>),
 
                         typeof(Json_FromStream<LoginViewModel>),
                         typeof(Json_FromStream<Location>),
                         typeof(Json_FromStream<IndexViewModel>),
+                        typeof(Json_FromString<MyEventsListerViewModel>),
                     }
                 )
                 .Run(args, new BenchmarkConfig());
@@ -41,9 +45,9 @@ namespace Benchmarks
     {
         public BenchmarkConfig()
         {
-            Add(Job.ShortRun.With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp20)).AsBaseline().WithId("2.0"));
-            Add(Job.ShortRun.With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp21)).WithId("2.1"));
-            Add(Job.ShortRun.With(CsProjClassicNetToolchain.Net47).WithId("4.7"));
+            Add(Job.Default.With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp20)).AsBaseline().WithId("2.0"));
+            Add(Job.Default.With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp21)).WithId("2.1"));
+            Add(Job.Default.With(CsProjClassicNetToolchain.Net47).WithId("4.7"));
 
             Add(MemoryDiagnoser.Default);
 

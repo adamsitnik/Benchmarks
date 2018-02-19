@@ -14,6 +14,8 @@ namespace Benchmarks.Serializers
                 return (T)(object)CreateLocation();
             if (typeof(T) == typeof(IndexViewModel))
                 return (T)(object)CreateIndexViewModel();
+            if (typeof(T) == typeof(MyEventsListerViewModel))
+                return (T)(object)CreateMyEventsListerViewModel();
 
             throw new NotImplementedException();
         }
@@ -66,6 +68,34 @@ namespace Benchmarks.Serializers
                         StartDate = DateTime.UtcNow
                     },
                     count: 20).ToList()
+            };
+
+        private static MyEventsListerViewModel CreateMyEventsListerViewModel()
+            => new MyEventsListerViewModel
+            {
+                CurrentEvents = Enumerable.Repeat(CreateMyEventsListerItem(), 3),
+                FutureEvents = Enumerable.Repeat(CreateMyEventsListerItem(), 9),
+                PastEvents = Enumerable.Repeat(CreateMyEventsListerItem(), 60) // usually  there is a lot of historical data
+            };
+
+        private static MyEventsListerItem CreateMyEventsListerItem()
+            => new MyEventsListerItem
+            {
+                Campaign = "A very nice campaing",
+                EndDate = DateTime.UtcNow.AddDays(7),
+                EventId = 321,
+                EventName = "wonderful name",
+                Organization = "Local Animal Shelter",
+                StartDate = DateTime.UtcNow.AddDays(-7),
+                TimeZone = TimeZoneInfo.Utc.DisplayName,
+                VolunteerCount = 15,
+                Tasks = Enumerable.Repeat(
+                    new MyEventsListerItemTask
+                    {
+                        StartDate = DateTime.UtcNow,
+                        EndDate = DateTime.UtcNow.AddDays(1),
+                        Name = "A very nice task to have"
+                    }, 4).ToList()
             };
     }
 
