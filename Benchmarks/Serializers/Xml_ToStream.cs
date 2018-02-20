@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace Benchmarks.Serializers
 {
-    [Config(typeof(SgenConfig))]
+    //[Config(typeof(SgenConfig))] https://github.com/dotnet/corefx/issues/27281 it does not work when project targets multiple frameworks
     public class Xml_ToStream<T>
     {
         private readonly T value;
@@ -35,7 +35,7 @@ namespace Benchmarks.Serializers
         }
 
         [Benchmark]
-        public void Xml()
+        public void Serialize()
         {
             memoryStream.Position = 0;
             xmlSerializer.Serialize(memoryStream, value);

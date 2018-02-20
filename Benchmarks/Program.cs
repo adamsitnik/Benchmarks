@@ -1,11 +1,11 @@
-﻿using BenchmarkDotNet.Columns;
-using BenchmarkDotNet.Configs;
+﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
 using BenchmarkDotNet.Toolchains.DotNetCli;
 using Benchmarks.Serializers;
+using System;
 using System.Linq;
 
 namespace Benchmarks
@@ -15,30 +15,31 @@ namespace Benchmarks
         static void Main(string[] args)
             => BenchmarkSwitcher.FromTypes
                 (
-                    new[]
-                    {
-                        typeof(Json_ToString<LoginViewModel>),
-                        typeof(Json_ToString<Location>),
-                        typeof(Json_ToString<IndexViewModel>),
-                        typeof(Json_ToString<MyEventsListerViewModel>),
-
-                        typeof(Json_ToStream<LoginViewModel>),
-                        typeof(Json_ToStream<Location>),
-                        typeof(Json_ToStream<IndexViewModel>),
-                        typeof(Json_ToStream<MyEventsListerViewModel>),
-
-                        typeof(Json_FromString<LoginViewModel>),
-                        typeof(Json_FromString<Location>),
-                        typeof(Json_FromString<IndexViewModel>),
-                        typeof(Json_FromString<MyEventsListerViewModel>),
-
-                        typeof(Json_FromStream<LoginViewModel>),
-                        typeof(Json_FromStream<Location>),
-                        typeof(Json_FromStream<IndexViewModel>),
-                        typeof(Json_FromString<MyEventsListerViewModel>),
-                    }
+                    GetOpenGenericBenchmarks()
+                        .SelectMany(openGeneric => GetViewModels().Select(viewModel => openGeneric.MakeGenericType(viewModel)))
+                        .ToArray()
                 )
                 .Run(args, new BenchmarkConfig());
+
+        static Type[] GetOpenGenericBenchmarks()
+            => new Type[]
+            {
+                typeof(Json_ToString<>),
+                typeof(Json_ToStream<>),
+                typeof(Json_FromString<>),
+                typeof(Json_FromStream<>),
+                typeof(Xml_ToStream<>),
+                typeof(Xml_FromStream<>)
+            };
+
+        static Type[] GetViewModels()
+            => new Type[]
+            {
+                typeof(LoginViewModel),
+                typeof(Location),
+                typeof(IndexViewModel),
+                typeof(MyEventsListerViewModel)
+            };
     }
 
     public class BenchmarkConfig : ManualConfig
