@@ -73,9 +73,9 @@ namespace Benchmarks.Serializers
         private static MyEventsListerViewModel CreateMyEventsListerViewModel()
             => new MyEventsListerViewModel
             {
-                CurrentEvents = Enumerable.Repeat(CreateMyEventsListerItem(), 3),
-                FutureEvents = Enumerable.Repeat(CreateMyEventsListerItem(), 9),
-                PastEvents = Enumerable.Repeat(CreateMyEventsListerItem(), 60) // usually  there is a lot of historical data
+                CurrentEvents = Enumerable.Repeat(CreateMyEventsListerItem(), 3).ToList(),
+                FutureEvents = Enumerable.Repeat(CreateMyEventsListerItem(), 9).ToList(),
+                PastEvents = Enumerable.Repeat(CreateMyEventsListerItem(), 60).ToList() // usually  there is a lot of historical data
             };
 
         private static MyEventsListerItem CreateMyEventsListerItem()
@@ -162,9 +162,11 @@ namespace Benchmarks.Serializers
 
     public class MyEventsListerViewModel
     {
-        public IEnumerable<MyEventsListerItem> CurrentEvents { get; set; } = new List<MyEventsListerItem>();
-        public IEnumerable<MyEventsListerItem> FutureEvents { get; set; } = new List<MyEventsListerItem>();
-        public IEnumerable<MyEventsListerItem> PastEvents { get; set; } = new List<MyEventsListerItem>();
+        // the orginal type defined these fields as IEnumerable,
+        // but XmlSerializer failed to serialize them with "cannot serialize member because it is an interface" error
+        public List<MyEventsListerItem> CurrentEvents { get; set; } = new List<MyEventsListerItem>();
+        public List<MyEventsListerItem> FutureEvents { get; set; } = new List<MyEventsListerItem>();
+        public List<MyEventsListerItem> PastEvents { get; set; } = new List<MyEventsListerItem>();
     }
 
     public class MyEventsListerItem
