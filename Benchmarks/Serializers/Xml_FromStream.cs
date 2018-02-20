@@ -48,6 +48,8 @@ namespace Benchmarks.Serializers
             return (T)dataContractSerializer.ReadObject(memoryStream);
         }
 
+        // YAXSerializer is not included in the benchmarks because it does not allow to deserialize from stream (only from file and string)
+
         [GlobalCleanup]
         public void Cleanup() => memoryStream.Dispose();
     }
