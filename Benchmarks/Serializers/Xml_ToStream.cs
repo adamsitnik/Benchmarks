@@ -4,6 +4,7 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Toolchains.CsProj;
 using BenchmarkDotNet.Toolchains.DotNetCli;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace Benchmarks.Serializers
@@ -13,12 +14,14 @@ namespace Benchmarks.Serializers
     {
         private readonly T value;
         private readonly XmlSerializer xmlSerializer;
+        private readonly DataContractSerializer dataContractSerializer;
         private readonly MemoryStream memoryStream;
 
         public Xml_ToStream()
         {
             value = DataGenerator.Generate<T>();
             xmlSerializer = new XmlSerializer(typeof(T));
+            dataContractSerializer = new DataContractSerializer(typeof(T));
             memoryStream = new MemoryStream(capacity: short.MaxValue);
 
 #if SGEN
@@ -34,11 +37,18 @@ namespace Benchmarks.Serializers
 #endif
         }
 
-        [Benchmark]
-        public void Serialize()
+        [Benchmark(Description = nameof(XmlSerializer))]
+        public void XmlSerializer_()
         {
             memoryStream.Position = 0;
             xmlSerializer.Serialize(memoryStream, value);
+        }
+
+        [Benchmark(Description = nameof(DataContractSerializer))]
+        public void DataContractSerializer_()
+        {
+            memoryStream.Position = 0;
+            dataContractSerializer.WriteObject(memoryStream, value);
         }
 
         [GlobalCleanup]
