@@ -30,6 +30,8 @@ namespace Benchmarks
                 typeof(Json_FromStream<>),
                 typeof(Xml_ToStream<>),
                 typeof(Xml_FromStream<>)
+                typeof(Binary_ToStream<>),
+                typeof(Binary_FromStream<>)
             };
 
         static Type[] GetViewModels()

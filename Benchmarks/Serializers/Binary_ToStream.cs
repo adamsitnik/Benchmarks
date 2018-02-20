@@ -1,4 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
+using Benchmarks.Serializers.Helpers;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -17,6 +19,8 @@ namespace Benchmarks.Serializers
             // the stream is pre-allocated, we don't want the benchmarks to include stream allocaton cost
             memoryStream = new MemoryStream(capacity: short.MaxValue);
             binaryFormatter = new BinaryFormatter();
+
+            ProtoBuf.Meta.RuntimeTypeModel.Default.Add(typeof(DateTimeOffset), false).SetSurrogate(typeof(DateTimeOffsetSurrogate)); // https://stackoverflow.com/a/7046868
         }
 
         [Benchmark(Description = nameof(BinaryFormatter))]
@@ -24,6 +28,13 @@ namespace Benchmarks.Serializers
         {
             memoryStream.Position = 0;
             binaryFormatter.Serialize(memoryStream, value);
+        }
+
+        [Benchmark(Description = "protobuf-net")]
+        public void ProtoBuffNet()
+        {
+            memoryStream.Position = 0;
+            ProtoBuf.Serializer.Serialize(memoryStream, value);
         }
     }
 }

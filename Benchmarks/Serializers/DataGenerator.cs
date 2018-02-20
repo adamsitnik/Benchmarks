@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProtoBuf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -101,102 +102,111 @@ namespace Benchmarks.Serializers
 
     // the view models come from a real world app called "AllReady"
     [Serializable]
+    [ProtoContract]
     public class LoginViewModel
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public bool RememberMe { get; set; }
+        [ProtoMember(1)]public string Email { get; set; }
+        [ProtoMember(2)]public string Password { get; set; }
+        [ProtoMember(3)]public bool RememberMe { get; set; }
     }
 
     [Serializable]
+    [ProtoContract]
     public class Location
     {
-        public int Id { get; set; }
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string PostalCode { get; set; }
-        public string Name { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Country { get; set; }
+        [ProtoMember(1)]public int Id { get; set; }
+        [ProtoMember(2)]public string Address1 { get; set; }
+        [ProtoMember(3)]public string Address2 { get; set; }
+        [ProtoMember(4)]public string City { get; set; }
+        [ProtoMember(5)]public string State { get; set; }
+        [ProtoMember(6)]public string PostalCode { get; set; }
+        [ProtoMember(7)]public string Name { get; set; }
+        [ProtoMember(8)]public string PhoneNumber { get; set; }
+        [ProtoMember(9)]public string Country { get; set; }
     }
 
     [Serializable]
+    [ProtoContract]
     public class ActiveOrUpcomingCampaign
     {
-        public int Id { get; set; }
-        public string ImageUrl { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset EndDate { get; set; }
+        [ProtoMember(1)]public int Id { get; set; }
+        [ProtoMember(2)]public string ImageUrl { get; set; }
+        [ProtoMember(3)]public string Name { get; set; }
+        [ProtoMember(4)]public string Description { get; set; }
+        [ProtoMember(5)]public DateTimeOffset StartDate { get; set; }
+        [ProtoMember(6)]public DateTimeOffset EndDate { get; set; }
     }
 
     [Serializable]
+    [ProtoContract]
     public class ActiveOrUpcomingEvent
     {
-        public int Id { get; set; }
-        public string ImageUrl { get; set; }
-        public string Name { get; set; }
-        public string CampaignName { get; set; }
-        public string CampaignManagedOrganizerName { get; set; }
-        public string Description { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset EndDate { get; set; }
+        [ProtoMember(1)]public int Id { get; set; }
+        [ProtoMember(2)]public string ImageUrl { get; set; }
+        [ProtoMember(3)]public string Name { get; set; }
+        [ProtoMember(4)]public string CampaignName { get; set; }
+        [ProtoMember(5)]public string CampaignManagedOrganizerName { get; set; }
+        [ProtoMember(6)]public string Description { get; set; }
+        [ProtoMember(7)]public DateTimeOffset StartDate { get; set; }
+        [ProtoMember(8)]public DateTimeOffset EndDate { get; set; }
     }
 
     [Serializable]
+    [ProtoContract]
     public class CampaignSummaryViewModel
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string ImageUrl { get; set; }
-        public string OrganizationName { get; set; }
-        public string Headline { get; set; }
+        [ProtoMember(1)]public int Id { get; set; }
+        [ProtoMember(2)]public string Title { get; set; }
+        [ProtoMember(3)]public string Description { get; set; }
+        [ProtoMember(4)]public string ImageUrl { get; set; }
+        [ProtoMember(5)]public string OrganizationName { get; set; }
+        [ProtoMember(6)]public string Headline { get; set; }
     }
 
     [Serializable]
+    [ProtoContract]
     public class IndexViewModel
     {
-        public List<ActiveOrUpcomingEvent> ActiveOrUpcomingEvents { get; set; }
-        public CampaignSummaryViewModel FeaturedCampaign { get; set; }
-        public bool IsNewAccount { get; set; }
+        [ProtoMember(1)]public List<ActiveOrUpcomingEvent> ActiveOrUpcomingEvents { get; set; }
+        [ProtoMember(2)]public CampaignSummaryViewModel FeaturedCampaign { get; set; }
+        [ProtoMember(3)]public bool IsNewAccount { get; set; }
         public bool HasFeaturedCampaign => FeaturedCampaign != null;
     }
 
     [Serializable]
+    [ProtoContract]
     public class MyEventsListerViewModel
     {
         // the orginal type defined these fields as IEnumerable,
         // but XmlSerializer failed to serialize them with "cannot serialize member because it is an interface" error
-        public List<MyEventsListerItem> CurrentEvents { get; set; } = new List<MyEventsListerItem>();
-        public List<MyEventsListerItem> FutureEvents { get; set; } = new List<MyEventsListerItem>();
-        public List<MyEventsListerItem> PastEvents { get; set; } = new List<MyEventsListerItem>();
+        [ProtoMember(1)]public List<MyEventsListerItem> CurrentEvents { get; set; } = new List<MyEventsListerItem>();
+        [ProtoMember(2)]public List<MyEventsListerItem> FutureEvents { get; set; } = new List<MyEventsListerItem>();
+        [ProtoMember(3)]public List<MyEventsListerItem> PastEvents { get; set; } = new List<MyEventsListerItem>();
     }
 
     [Serializable]
+    [ProtoContract]
     public class MyEventsListerItem
     {
-        public int EventId { get; set; }
-        public string EventName { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset EndDate { get; set; }
-        public string TimeZone { get; set; }
-        public string Campaign { get; set; }
-        public string Organization { get; set; }
-        public int VolunteerCount { get; set; }
+        [ProtoMember(1)]public int EventId { get; set; }
+        [ProtoMember(2)]public string EventName { get; set; }
+        [ProtoMember(3)]public DateTimeOffset StartDate { get; set; }
+        [ProtoMember(4)]public DateTimeOffset EndDate { get; set; }
+        [ProtoMember(5)]public string TimeZone { get; set; }
+        [ProtoMember(6)]public string Campaign { get; set; }
+        [ProtoMember(7)]public string Organization { get; set; }
+        [ProtoMember(8)]public int VolunteerCount { get; set; }
 
-        public List<MyEventsListerItemTask> Tasks { get; set; } = new List<MyEventsListerItemTask>();
+        [ProtoMember(9)]public List<MyEventsListerItemTask> Tasks { get; set; } = new List<MyEventsListerItemTask>();
     }
 
     [Serializable]
+    [ProtoContract]
     public class MyEventsListerItemTask
     {
-        public string Name { get; set; }
-        public DateTimeOffset? StartDate { get; set; }
-        public DateTimeOffset? EndDate { get; set; }
+        [ProtoMember(1)]public string Name { get; set; }
+        [ProtoMember(2)]public DateTimeOffset? StartDate { get; set; }
+        [ProtoMember(3)]public DateTimeOffset? EndDate { get; set; }
 
         public string FormattedDate
         {
