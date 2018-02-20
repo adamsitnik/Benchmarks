@@ -100,6 +100,7 @@ namespace Benchmarks.Serializers
     }
 
     // the view models come from a real world app called "AllReady"
+    [Serializable]
     public class LoginViewModel
     {
         public string Email { get; set; }
@@ -107,6 +108,7 @@ namespace Benchmarks.Serializers
         public bool RememberMe { get; set; }
     }
 
+    [Serializable]
     public class Location
     {
         public int Id { get; set; }
@@ -120,6 +122,7 @@ namespace Benchmarks.Serializers
         public string Country { get; set; }
     }
 
+    [Serializable]
     public class ActiveOrUpcomingCampaign
     {
         public int Id { get; set; }
@@ -130,6 +133,7 @@ namespace Benchmarks.Serializers
         public DateTimeOffset EndDate { get; set; }
     }
 
+    [Serializable]
     public class ActiveOrUpcomingEvent
     {
         public int Id { get; set; }
@@ -142,6 +146,7 @@ namespace Benchmarks.Serializers
         public DateTimeOffset EndDate { get; set; }
     }
 
+    [Serializable]
     public class CampaignSummaryViewModel
     {
         public int Id { get; set; }
@@ -152,6 +157,7 @@ namespace Benchmarks.Serializers
         public string Headline { get; set; }
     }
 
+    [Serializable]
     public class IndexViewModel
     {
         public List<ActiveOrUpcomingEvent> ActiveOrUpcomingEvents { get; set; }
@@ -160,6 +166,7 @@ namespace Benchmarks.Serializers
         public bool HasFeaturedCampaign => FeaturedCampaign != null;
     }
 
+    [Serializable]
     public class MyEventsListerViewModel
     {
         // the orginal type defined these fields as IEnumerable,
@@ -169,6 +176,7 @@ namespace Benchmarks.Serializers
         public List<MyEventsListerItem> PastEvents { get; set; } = new List<MyEventsListerItem>();
     }
 
+    [Serializable]
     public class MyEventsListerItem
     {
         public int EventId { get; set; }
@@ -183,6 +191,7 @@ namespace Benchmarks.Serializers
         public List<MyEventsListerItemTask> Tasks { get; set; } = new List<MyEventsListerItemTask>();
     }
 
+    [Serializable]
     public class MyEventsListerItemTask
     {
         public string Name { get; set; }
