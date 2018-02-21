@@ -1,9 +1,16 @@
-﻿using MessagePack;
-using ProtoBuf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#if SGEN
+// the new SGEN tool fails to load some of the dependencies, so we need to replace the problematic dependencies for this particular build configuration
+// see https://github.com/dotnet/corefx/issues/27281#issuecomment-367449130 fore more
+using Benchmarks.Serializers.Helpers;
+#else
+using ProtoBuf;
+using MessagePack;
 using ZeroFormatter;
+#endif
 
 namespace Benchmarks.Serializers
 {

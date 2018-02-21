@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Toolchains.CsProj;
 using BenchmarkDotNet.Toolchains.DotNetCli;
@@ -9,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace Benchmarks.Serializers
 {
-    //[Config(typeof(SgenConfig))] https://github.com/dotnet/corefx/issues/27281 it does not work when project targets multiple frameworks
+    //[Config(typeof(SgenConfig))] // currently blocked https://github.com/dotnet/corefx/issues/27281#issuecomment-367533728
     public class Xml_ToStream<T>
     {
         private readonly T value;
@@ -61,14 +62,15 @@ namespace Benchmarks.Serializers
     {
         public SgenConfig()
         {
-            Add(Job.ShortRun
+            Add(Job.Dry.With(RunStrategy.ColdStart).WithLaunchCount(10) // Dry job is 1 execution without pre-Jitting
                 .WithCustomBuildConfiguration("SGEN") // this is going to use Microsoft.XmlSerializer.Generator
                 .With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp21)).WithId("SGEN"));
 
-            Add(Job.ShortRun
+            Add(Job.Dry.With(RunStrategy.ColdStart).WithLaunchCount(10) // Dry job is 1 execution without pre-Jitting
                 .With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp21)).WithId("NO_SGEN"));
 
-            // make sure that Benchmarks.XmlSerializers.dll file exists (https://github.com/dotnet/core/blob/master/samples/xmlserializergenerator-instructions.md)
+            // to make sure that Benchmarks.XmlSerializers.dll file exists (https://github.com/dotnet/core/blob/master/samples/xmlserializergenerator-instructions.md)
+            // you can uncomment the line below
             KeepBenchmarkFiles = true;
         }
     }
