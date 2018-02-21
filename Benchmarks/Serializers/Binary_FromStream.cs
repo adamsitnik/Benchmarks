@@ -30,13 +30,6 @@ namespace Benchmarks.Serializers
             binaryFormatter.Serialize(memoryStream, value);
         }
 
-        [Benchmark(Description = nameof(BinaryFormatter))]
-        public T BinaryFormatter_()
-        {
-            memoryStream.Position = 0;
-            return (T)binaryFormatter.Deserialize(memoryStream);
-        }
-
         [IterationSetup(Target = nameof(ProtoBuffNet))]
         public void SetupProtoBuffNet()
         {
@@ -44,11 +37,32 @@ namespace Benchmarks.Serializers
             ProtoBuf.Serializer.Serialize(memoryStream, value);
         }
 
+        [IterationSetup(Target = nameof(ZeroFormatter_))]
+        public void SetupZeroFormatter_()
+        {
+            memoryStream.Position = 0;
+            ZeroFormatter.ZeroFormatterSerializer.Serialize<T>(memoryStream, value);
+        }
+
+        [Benchmark(Description = nameof(BinaryFormatter))]
+        public T BinaryFormatter_()
+        {
+            memoryStream.Position = 0;
+            return (T)binaryFormatter.Deserialize(memoryStream);
+        }
+
         [Benchmark(Description = "protobuf-net")]
         public T ProtoBuffNet()
         {
             memoryStream.Position = 0;
             return ProtoBuf.Serializer.Deserialize<T>(memoryStream);
+        }
+
+        [Benchmark(Description = "ZeroFormatter")]
+        public T ZeroFormatter_()
+        {
+            memoryStream.Position = 0;
+            return ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(memoryStream);
         }
     }
 }

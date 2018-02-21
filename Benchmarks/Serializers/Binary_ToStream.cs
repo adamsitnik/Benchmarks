@@ -36,5 +36,12 @@ namespace Benchmarks.Serializers
             memoryStream.Position = 0;
             ProtoBuf.Serializer.Serialize(memoryStream, value);
         }
+
+        [Benchmark(Description = "ZeroFormatter")]
+        public void ZeroFormatter_()
+        {
+            memoryStream.Position = 0;
+            ZeroFormatter.ZeroFormatterSerializer.Serialize<T>(memoryStream, value);
+        }
     }
 }
