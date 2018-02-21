@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Benchmarks.Serializers
 {
-    public class Binary_FromStream<T>
+    public class Binary_FromStream<T> where T : IVerifiable
     {
         private readonly T value;
         private readonly MemoryStream memoryStream;
@@ -37,7 +37,7 @@ namespace Benchmarks.Serializers
             ProtoBuf.Serializer.Serialize(memoryStream, value);
         }
 
-        [IterationSetup(Target = nameof(ZeroFormatter_))]
+        [IterationSetup(Target = nameof(ZeroFormatter_Naive) + "," + nameof(ZeroFormatter_Real))]
         public void SetupZeroFormatter_()
         {
             memoryStream.Position = 0;
@@ -58,11 +58,26 @@ namespace Benchmarks.Serializers
             return ProtoBuf.Serializer.Deserialize<T>(memoryStream);
         }
 
-        [Benchmark(Description = "ZeroFormatter")]
-        public T ZeroFormatter_()
+        [Benchmark(Description = "ZeroFormatter_Naive")]
+        public T ZeroFormatter_Naive()
         {
             memoryStream.Position = 0;
             return ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(memoryStream);
+        }
+
+        /// <summary>
+        /// ZeroFormatter requires all properties to be virtual
+        /// they are deserialized for real when they are used for the first time
+        /// if we don't touch the properites, they are not being deserialized and the result is skewed
+        /// </summary>
+        [Benchmark(Description = "ZeroFormatter_Real")]
+        public long ZeroFormatter_Real()
+        {
+            memoryStream.Position = 0;
+
+            var deserialized = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(memoryStream);
+
+            return deserialized.TouchEveryProperty();
         }
     }
 }

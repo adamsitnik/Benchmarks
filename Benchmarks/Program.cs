@@ -42,28 +42,6 @@ namespace Benchmarks
                 typeof(IndexViewModel),
                 typeof(MyEventsListerViewModel)
             };
-
-        /// <summary>
-        /// ZeroFormatter is so fast that I needed to verify if it's not cheating in any way ;)
-        /// </summary>
-        static void EnsureZeroFormatterIsNotCheating()
-        {
-            var sut = new Binary_FromStream<Location>();
-
-            sut.SetupZeroFormatter_();
-
-            Location[] deserialized = Enumerable.Range(0, 10).Select(_ => sut.ZeroFormatter_()).ToArray();
-
-            for (int i = 1; i < deserialized.Length; i++)
-            {
-                if (object.ReferenceEquals(deserialized[i - 1], deserialized[i]))
-                    throw new InvalidOperationException();
-                if (object.ReferenceEquals(deserialized[i - 1].Address1, deserialized[i].Address1))
-                    throw new InvalidOperationException();
-                if (object.ReferenceEquals(deserialized[i - 1].Address2, deserialized[i].Address2))
-                    throw new InvalidOperationException();
-            }
-        }
     }
 
     public class BenchmarkConfig : ManualConfig
