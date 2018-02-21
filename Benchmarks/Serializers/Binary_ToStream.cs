@@ -43,5 +43,12 @@ namespace Benchmarks.Serializers
             memoryStream.Position = 0;
             ZeroFormatter.ZeroFormatterSerializer.Serialize<T>(memoryStream, value);
         }
+
+        [Benchmark(Description = "MessagePack")]
+        public void MessagePack_()
+        {
+            memoryStream.Position = 0;
+            MessagePack.MessagePackSerializer.Serialize<T>(memoryStream, value);
+        }
     }
 }

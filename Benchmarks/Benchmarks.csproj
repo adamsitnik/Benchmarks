@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.10.12.443" />
     <PackageReference Include="Jil" Version="2.15.4" />
+    <PackageReference Include="MessagePack" Version="1.7.3.4" />
+    <PackageReference Include="MessagePackAnalyzer" Version="1.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="protobuf-net" Version="2.3.7" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />

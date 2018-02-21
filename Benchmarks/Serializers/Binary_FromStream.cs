@@ -44,6 +44,13 @@ namespace Benchmarks.Serializers
             ZeroFormatter.ZeroFormatterSerializer.Serialize<T>(memoryStream, value);
         }
 
+        [IterationSetup(Target = nameof(MessagePack_))]
+        public void SetupMessagePack()
+        {
+            memoryStream.Position = 0;
+            MessagePack.MessagePackSerializer.Serialize<T>(memoryStream, value);
+        }
+
         [Benchmark(Description = nameof(BinaryFormatter))]
         public T BinaryFormatter_()
         {
@@ -78,6 +85,13 @@ namespace Benchmarks.Serializers
             var deserialized = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(memoryStream);
 
             return deserialized.TouchEveryProperty();
+        }
+
+        [Benchmark(Description = "MessagePack")]
+        public T MessagePack_()
+        {
+            memoryStream.Position = 0;
+            return MessagePack.MessagePackSerializer.Deserialize<T>(memoryStream);
         }
     }
 }

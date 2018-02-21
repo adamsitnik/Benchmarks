@@ -1,4 +1,5 @@
-﻿using ProtoBuf;
+﻿using MessagePack;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -115,11 +116,12 @@ namespace Benchmarks.Serializers
     [Serializable]
     [ProtoContract]
     [ZeroFormattable]
+    [MessagePackObject]
     public class LoginViewModel : IVerifiable
     {
-        [ProtoMember(1)] [Index(0)] public virtual string Email { get; set; }
-        [ProtoMember(2)] [Index(1)] public virtual string Password { get; set; }
-        [ProtoMember(3)] [Index(2)] public virtual bool RememberMe { get; set; }
+        [ProtoMember(1)] [Index(0)] [Key(0)] public virtual string Email { get; set; }
+        [ProtoMember(2)] [Index(1)] [Key(1)] public virtual string Password { get; set; }
+        [ProtoMember(3)] [Index(2)] [Key(2)] public virtual bool RememberMe { get; set; }
 
         public long TouchEveryProperty() => Email.Length + Password.Length + Convert.ToInt32(RememberMe);
     }
@@ -127,17 +129,18 @@ namespace Benchmarks.Serializers
     [Serializable]
     [ProtoContract]
     [ZeroFormattable]
+    [MessagePackObject]
     public class Location : IVerifiable
     {
-        [ProtoMember(1)] [Index(0)] public virtual int Id { get; set; }
-        [ProtoMember(2)] [Index(1)] public virtual string Address1 { get; set; }
-        [ProtoMember(3)] [Index(2)] public virtual string Address2 { get; set; }
-        [ProtoMember(4)] [Index(3)] public virtual string City { get; set; }
-        [ProtoMember(5)] [Index(4)] public virtual string State { get; set; }
-        [ProtoMember(6)] [Index(5)] public virtual string PostalCode { get; set; }
-        [ProtoMember(7)] [Index(6)] public virtual string Name { get; set; }
-        [ProtoMember(8)] [Index(7)] public virtual string PhoneNumber { get; set; }
-        [ProtoMember(9)] [Index(8)] public virtual string Country { get; set; }
+        [ProtoMember(1)] [Index(0)] [Key(0)] public virtual int Id { get; set; }
+        [ProtoMember(2)] [Index(1)] [Key(1)] public virtual string Address1 { get; set; }
+        [ProtoMember(3)] [Index(2)] [Key(2)] public virtual string Address2 { get; set; }
+        [ProtoMember(4)] [Index(3)] [Key(3)] public virtual string City { get; set; }
+        [ProtoMember(5)] [Index(4)] [Key(4)] public virtual string State { get; set; }
+        [ProtoMember(6)] [Index(5)] [Key(5)] public virtual string PostalCode { get; set; }
+        [ProtoMember(7)] [Index(6)] [Key(6)] public virtual string Name { get; set; }
+        [ProtoMember(8)] [Index(7)] [Key(7)] public virtual string PhoneNumber { get; set; }
+        [ProtoMember(9)] [Index(8)] [Key(8)] public virtual string Country { get; set; }
 
         public long TouchEveryProperty() => Id + Address1.Length + Address2.Length + City.Length + State.Length + PostalCode.Length + Name.Length + PhoneNumber.Length + Country.Length;
     }
@@ -145,14 +148,15 @@ namespace Benchmarks.Serializers
     [Serializable]
     [ProtoContract]
     [ZeroFormattable]
+    [MessagePackObject]
     public class ActiveOrUpcomingCampaign : IVerifiable
     {
-        [ProtoMember(1)] [Index(0)] public virtual int Id { get; set; }
-        [ProtoMember(2)] [Index(1)] public virtual string ImageUrl { get; set; }
-        [ProtoMember(3)] [Index(2)] public virtual string Name { get; set; }
-        [ProtoMember(4)] [Index(3)] public virtual string Description { get; set; }
-        [ProtoMember(5)] [Index(4)] public virtual DateTimeOffset StartDate { get; set; }
-        [ProtoMember(6)] [Index(5)] public virtual DateTimeOffset EndDate { get; set; }
+        [ProtoMember(1)] [Index(0)] [Key(0)] public virtual int Id { get; set; }
+        [ProtoMember(2)] [Index(1)] [Key(1)] public virtual string ImageUrl { get; set; }
+        [ProtoMember(3)] [Index(2)] [Key(2)] public virtual string Name { get; set; }
+        [ProtoMember(4)] [Index(3)] [Key(3)] public virtual string Description { get; set; }
+        [ProtoMember(5)] [Index(4)] [Key(4)] public virtual DateTimeOffset StartDate { get; set; }
+        [ProtoMember(6)] [Index(5)] [Key(5)] public virtual DateTimeOffset EndDate { get; set; }
 
         public long TouchEveryProperty() => Id + ImageUrl.Length + Name.Length + Description.Length + StartDate.Ticks + EndDate.Ticks;
     }
@@ -160,16 +164,17 @@ namespace Benchmarks.Serializers
     [Serializable]
     [ProtoContract]
     [ZeroFormattable]
+    [MessagePackObject]
     public class ActiveOrUpcomingEvent : IVerifiable
     {
-        [ProtoMember(1)] [Index(0)] public virtual int Id { get; set; }
-        [ProtoMember(2)] [Index(1)] public virtual string ImageUrl { get; set; }
-        [ProtoMember(3)] [Index(2)] public virtual string Name { get; set; }
-        [ProtoMember(4)] [Index(3)] public virtual string CampaignName { get; set; }
-        [ProtoMember(5)] [Index(4)] public virtual string CampaignManagedOrganizerName { get; set; }
-        [ProtoMember(6)] [Index(5)] public virtual string Description { get; set; }
-        [ProtoMember(7)] [Index(6)] public virtual DateTimeOffset StartDate { get; set; }
-        [ProtoMember(8)] [Index(7)] public virtual DateTimeOffset EndDate { get; set; }
+        [ProtoMember(1)] [Index(0)] [Key(0)] public virtual int Id { get; set; }
+        [ProtoMember(2)] [Index(1)] [Key(1)] public virtual string ImageUrl { get; set; }
+        [ProtoMember(3)] [Index(2)] [Key(2)] public virtual string Name { get; set; }
+        [ProtoMember(4)] [Index(3)] [Key(3)] public virtual string CampaignName { get; set; }
+        [ProtoMember(5)] [Index(4)] [Key(4)] public virtual string CampaignManagedOrganizerName { get; set; }
+        [ProtoMember(6)] [Index(5)] [Key(5)] public virtual string Description { get; set; }
+        [ProtoMember(7)] [Index(6)] [Key(6)] public virtual DateTimeOffset StartDate { get; set; }
+        [ProtoMember(8)] [Index(7)] [Key(7)] public virtual DateTimeOffset EndDate { get; set; }
 
         public long TouchEveryProperty() => Id + ImageUrl.Length + Name.Length + CampaignName.Length + CampaignManagedOrganizerName.Length + Description.Length + StartDate.Ticks + EndDate.Ticks;
     }
@@ -177,14 +182,15 @@ namespace Benchmarks.Serializers
     [Serializable]
     [ProtoContract]
     [ZeroFormattable]
+    [MessagePackObject]
     public class CampaignSummaryViewModel : IVerifiable
     {
-        [ProtoMember(1)] [Index(0)] public virtual int Id { get; set; }
-        [ProtoMember(2)] [Index(1)] public virtual string Title { get; set; }
-        [ProtoMember(3)] [Index(2)] public virtual string Description { get; set; }
-        [ProtoMember(4)] [Index(3)] public virtual string ImageUrl { get; set; }
-        [ProtoMember(5)] [Index(4)] public virtual string OrganizationName { get; set; }
-        [ProtoMember(6)] [Index(5)] public virtual string Headline { get; set; }
+        [ProtoMember(1)] [Index(0)] [Key(0)] public virtual int Id { get; set; }
+        [ProtoMember(2)] [Index(1)] [Key(1)] public virtual string Title { get; set; }
+        [ProtoMember(3)] [Index(2)] [Key(2)] public virtual string Description { get; set; }
+        [ProtoMember(4)] [Index(3)] [Key(3)] public virtual string ImageUrl { get; set; }
+        [ProtoMember(5)] [Index(4)] [Key(4)] public virtual string OrganizationName { get; set; }
+        [ProtoMember(6)] [Index(5)] [Key(5)] public virtual string Headline { get; set; }
 
         public long TouchEveryProperty() => Id + Title.Length + Description.Length + ImageUrl.Length + OrganizationName.Length + Headline.Length;
     }
@@ -192,12 +198,13 @@ namespace Benchmarks.Serializers
     [Serializable]
     [ProtoContract]
     [ZeroFormattable]
+    [MessagePackObject]
     public class IndexViewModel : IVerifiable
     {
-        [ProtoMember(1)] [Index(0)] public virtual List<ActiveOrUpcomingEvent> ActiveOrUpcomingEvents { get; set; }
-        [ProtoMember(2)] [Index(1)] public virtual CampaignSummaryViewModel FeaturedCampaign { get; set; }
-        [ProtoMember(3)] [Index(2)] public virtual bool IsNewAccount { get; set; }
-        [IgnoreFormat] public bool HasFeaturedCampaign => FeaturedCampaign != null;
+        [ProtoMember(1)] [Index(0)] [Key(0)] public virtual List<ActiveOrUpcomingEvent> ActiveOrUpcomingEvents { get; set; }
+        [ProtoMember(2)] [Index(1)] [Key(1)] public virtual CampaignSummaryViewModel FeaturedCampaign { get; set; }
+        [ProtoMember(3)] [Index(2)] [Key(2)] public virtual bool IsNewAccount { get; set; }
+        [IgnoreFormat] [IgnoreMember] public bool HasFeaturedCampaign => FeaturedCampaign != null;
 
         public long TouchEveryProperty()
         {
@@ -213,13 +220,14 @@ namespace Benchmarks.Serializers
     [Serializable]
     [ProtoContract]
     [ZeroFormattable]
+    [MessagePackObject]
     public class MyEventsListerViewModel : IVerifiable
     {
         // the orginal type defined these fields as IEnumerable,
         // but XmlSerializer failed to serialize them with "cannot serialize member because it is an interface" error
-        [ProtoMember(1)] [Index(0)] public virtual List<MyEventsListerItem> CurrentEvents { get; set; } = new List<MyEventsListerItem>();
-        [ProtoMember(2)] [Index(1)] public virtual List<MyEventsListerItem> FutureEvents { get; set; } = new List<MyEventsListerItem>();
-        [ProtoMember(3)] [Index(2)] public virtual List<MyEventsListerItem> PastEvents { get; set; } = new List<MyEventsListerItem>();
+        [ProtoMember(1)] [Index(0)] [Key(0)] public virtual List<MyEventsListerItem> CurrentEvents { get; set; } = new List<MyEventsListerItem>();
+        [ProtoMember(2)] [Index(1)] [Key(1)] public virtual List<MyEventsListerItem> FutureEvents { get; set; } = new List<MyEventsListerItem>();
+        [ProtoMember(3)] [Index(2)] [Key(2)] public virtual List<MyEventsListerItem> PastEvents { get; set; } = new List<MyEventsListerItem>();
 
         public long TouchEveryProperty()
         {
@@ -237,18 +245,19 @@ namespace Benchmarks.Serializers
     [Serializable]
     [ProtoContract]
     [ZeroFormattable]
+    [MessagePackObject]
     public class MyEventsListerItem : IVerifiable
     {
-        [ProtoMember(1)] [Index(0)] public virtual int EventId { get; set; }
-        [ProtoMember(2)] [Index(1)] public virtual string EventName { get; set; }
-        [ProtoMember(3)] [Index(2)] public virtual DateTimeOffset StartDate { get; set; }
-        [ProtoMember(4)] [Index(3)] public virtual DateTimeOffset EndDate { get; set; }
-        [ProtoMember(5)] [Index(4)] public virtual string TimeZone { get; set; }
-        [ProtoMember(6)] [Index(5)] public virtual string Campaign { get; set; }
-        [ProtoMember(7)] [Index(6)] public virtual string Organization { get; set; }
-        [ProtoMember(8)] [Index(7)] public virtual int VolunteerCount { get; set; }
+        [ProtoMember(1)] [Index(0)] [Key(0)] public virtual int EventId { get; set; }
+        [ProtoMember(2)] [Index(1)] [Key(1)] public virtual string EventName { get; set; }
+        [ProtoMember(3)] [Index(2)] [Key(2)] public virtual DateTimeOffset StartDate { get; set; }
+        [ProtoMember(4)] [Index(3)] [Key(3)] public virtual DateTimeOffset EndDate { get; set; }
+        [ProtoMember(5)] [Index(4)] [Key(4)] public virtual string TimeZone { get; set; }
+        [ProtoMember(6)] [Index(5)] [Key(5)] public virtual string Campaign { get; set; }
+        [ProtoMember(7)] [Index(6)] [Key(6)] public virtual string Organization { get; set; }
+        [ProtoMember(8)] [Index(7)] [Key(7)] public virtual int VolunteerCount { get; set; }
 
-        [ProtoMember(9)] [Index(8)] public virtual List<MyEventsListerItemTask> Tasks { get; set; } = new List<MyEventsListerItemTask>();
+        [ProtoMember(9)] [Index(8)] [Key(8)] public virtual List<MyEventsListerItemTask> Tasks { get; set; } = new List<MyEventsListerItemTask>();
 
         public long TouchEveryProperty()
         {
@@ -264,13 +273,15 @@ namespace Benchmarks.Serializers
     [Serializable]
     [ProtoContract]
     [ZeroFormattable]
+    [MessagePackObject]
     public class MyEventsListerItemTask : IVerifiable
     {
-        [ProtoMember(1)] [Index(0)] public virtual string Name { get; set; }
-        [ProtoMember(2)] [Index(1)] public virtual DateTimeOffset? StartDate { get; set; }
-        [ProtoMember(3)] [Index(2)] public virtual DateTimeOffset? EndDate { get; set; }
+        [ProtoMember(1)] [Index(0)] [Key(0)] public virtual string Name { get; set; }
+        [ProtoMember(2)] [Index(1)] [Key(1)] public virtual DateTimeOffset? StartDate { get; set; }
+        [ProtoMember(3)] [Index(2)] [Key(2)] public virtual DateTimeOffset? EndDate { get; set; }
 
         [IgnoreFormat]
+        [IgnoreMember]
         public string FormattedDate
         {
             get
