@@ -2,6 +2,8 @@
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
 using BenchmarkDotNet.Environments;
+using BenchmarkDotNet.Exporters;
+using BenchmarkDotNet.Exporters.Csv;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
@@ -63,8 +65,12 @@ namespace Benchmarks
 
             Add(DefaultConfig.Instance.GetValidators().ToArray());
             Add(DefaultConfig.Instance.GetLoggers().ToArray());
-            Add(DefaultConfig.Instance.GetExporters().ToArray());
             Add(DefaultConfig.Instance.GetColumnProviders().ToArray());
+
+            Add(CsvMeasurementsExporter.Default);
+            Add(RPlotExporter.Default); // it produces nice plots but requires R to be installed
+            Add(MarkdownExporter.GitHub);
+            Add(HtmlExporter.Default);
             //Add(StatisticColumn.AllStatistics);
         }
     }
