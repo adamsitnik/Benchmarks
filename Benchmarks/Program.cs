@@ -1,5 +1,7 @@
-﻿using BenchmarkDotNet.Configs;
+﻿using BenchmarkDotNet.Columns;
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Diagnosers;
+using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Toolchains.CsProj;
@@ -7,6 +9,7 @@ using BenchmarkDotNet.Toolchains.DotNetCli;
 using Benchmarks.Serializers;
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace Benchmarks
 {
@@ -48,9 +51,13 @@ namespace Benchmarks
     {
         public BenchmarkConfig()
         {
-            Add(Job.Default.With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp20)).AsBaseline().WithId("2.0"));
-            Add(Job.Default.With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp21)).WithId("2.1"));
-            Add(Job.Default.With(CsProjClassicNetToolchain.Net47).WithId("4.7"));
+            Add(Job.Default.With(Runtime.Core).With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp20)).AsBaseline().WithId("2.0"));
+            Add(Job.Default.With(Runtime.Core).With(CsProjCoreToolchain.From(NetCoreAppSettings.NetCoreApp21)).WithId("2.1"));
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                Add(Job.Default.With(Runtime.Clr).With(CsProjClassicNetToolchain.Net47).WithId("4.7"));
+
+            Add(Job.Default.With(Runtime.Mono).WithId("Mono"));
 
             Add(MemoryDiagnoser.Default);
 
