@@ -73,6 +73,14 @@ namespace Benchmarks
             Add(MarkdownExporter.GitHub);
             Add(HtmlExporter.Default);
             //Add(StatisticColumn.AllStatistics);
+
+            Set(new BenchmarkDotNet.Reports.SummaryStyle
+            {
+                PrintUnitsInHeader = true,
+                PrintUnitsInContent = false,
+                TimeUnit = BenchmarkDotNet.Horology.TimeUnit.Microsecond,
+                SizeUnit = BenchmarkDotNet.Columns.SizeUnit.B
+            });
         }
     }
 
@@ -100,6 +108,14 @@ namespace Benchmarks
             Add(MarkdownExporter.GitHub);
             Add(HtmlExporter.Default);
             Add(StatisticColumn.AllStatistics);
+
+            Set(new BenchmarkDotNet.Reports.SummaryStyle
+            {
+                PrintUnitsInHeader = true,
+                PrintUnitsInContent = false,
+                TimeUnit = BenchmarkDotNet.Horology.TimeUnit.Microsecond,
+                SizeUnit = BenchmarkDotNet.Columns.SizeUnit.B
+            });
         }
     }
 }
