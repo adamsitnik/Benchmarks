@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.0;netcoreapp2.1;net47</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;netcoreapp2.1;net46</TargetFrameworks>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.10.12.443" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.12.449" />
     <PackageReference Include="Jil" Version="2.15.4" />
     <PackageReference Include="MessagePack" Version="1.7.3.4" />
     <PackageReference Include="MessagePackAnalyzer" Version="1.6.0" />
@@ -18,11 +18,11 @@
     <PackageReference Include="Utf8Json" Version="1.3.7" />
     <PackageReference Include="ZeroFormatter" Version="1.6.4" />
     <PackageReference Include="ZeroFormatter.Analyzer" Version="1.1.1" />
-    <DotNetCliToolReference Include="Microsoft.XmlSerializer.Generator" Version="2.0.0-preview2-26216-03" />
+    <DotNetCliToolReference Include="Microsoft.XmlSerializer.Generator" Version="2.0.0-preview2-26222-04" />
   </ItemGroup>
     
   <ItemGroup Condition="'$(Configuration)' == 'SGEN' ">
-    <PackageReference Include="Microsoft.XmlSerializer.Generator" Version="2.0.0-preview2-26216-03" />
+    <PackageReference Include="Microsoft.XmlSerializer.Generator" Version="2.0.0-preview2-26222-04" />
   </ItemGroup>
 
 </Project>
